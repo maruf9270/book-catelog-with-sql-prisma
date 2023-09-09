@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { GlobalErrorHandler } from "./app/middlewares/globalErrorHandler";
 import { RootRoute } from "./app/routes/routes";
+import { GlobalErrorHandler } from "./app/middlewares/globalErrorHandler";
 
 export const app = express();
 export const port = process.env.PORT || 5000;

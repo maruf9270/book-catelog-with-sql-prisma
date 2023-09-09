@@ -73,4 +73,4 @@ const globalErrorHandler: ErrorRequestHandler = (
   });
 };
 
-export default globalErrorHandler;
+export const GlobalErrorHandler = { globalErrorHandler };
