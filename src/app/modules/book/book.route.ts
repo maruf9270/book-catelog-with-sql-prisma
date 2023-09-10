@@ -6,6 +6,8 @@ const routes = express.Router();
 
 // For creating new book
 routes.post("/", auth(ENUM_USER_ROLE.ADMIN), BookController.createNewBook);
+// For getting all the books with paginated data
+routes.get("/", BookController.getAllWithPaginated);
 // For updating single book
 routes.patch("/:id", auth(ENUM_USER_ROLE.ADMIN), BookController.updateBOok);
 // For finding book by cat id

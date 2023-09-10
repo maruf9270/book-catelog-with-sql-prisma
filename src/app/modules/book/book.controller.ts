@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 import { BookService } from "./book.service";
 import { ResponseSender } from "../../../helper/ResponseSender";
 import httpStatus from "http-status";
+import pick from "../../shared/pick";
+import paginationFields, { BookFilterAbleFileds } from "./book.constant";
 
 // For new book
 const createNewBook: RequestHandler = async (req, res, next) => {
@@ -80,10 +82,33 @@ const deleteSIngleBOok: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+// For gtting all the books with paginated data
+const getAllWithPaginated: RequestHandler = async (req, res, next) => {
+  try {
+    const filters = pick(req.query, BookFilterAbleFileds);
+
+    const paginationOptions = pick(req.query, paginationFields);
+    const result = await BookService.fetchWIthPaginated(
+      filters,
+      paginationOptions
+    );
+    ResponseSender.responseSender(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Book retrieved successful",
+      meta: result.meta,
+      data: result.data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export const BookController = {
   createNewBook,
   updateBOok,
   findBookByCatId,
   getSingleBookByID,
   deleteSIngleBOok,
+  getAllWithPaginated,
 };
