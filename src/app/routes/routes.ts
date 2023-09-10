@@ -14,6 +14,6 @@ router.use("/categories", CategoryRoutes.routes);
 // Routes for Book
 router.use("/books", BookRoutes.routes);
 // ROutes for order
-router.use("/order", OrderRoutes.routes);
+router.use("/orders", OrderRoutes.routes);
 
 export const RootRoute = { router };
