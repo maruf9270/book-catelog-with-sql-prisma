@@ -32,6 +32,15 @@ const getallorder: RequestHandler = async (req, res, next) => {
         message: "Orders retived successfully",
         data: result,
       });
+      if (user?.role == "customer") {
+        const result = await OrderService.getsingleById(user.id);
+        ResponseSender.responseSender(res, {
+          success: true,
+          statusCode: httpStatus.OK,
+          message: "Order retived successfully",
+          data: result,
+        });
+      }
     }
   } catch (error) {
     next(error);
