@@ -34,4 +34,49 @@ const updateBook = async (params: Partial<Book>, id: string) => {
   return result;
 };
 
-export const BookService = { postNewBook, updateBook };
+// For finding a single book by category id
+const findByCatId = async (id: string) => {
+  const result = await prisma.book.findMany({
+    where: {
+      categoryId: id,
+    },
+    include: {
+      category: true,
+    },
+  });
+  return result;
+};
+// Get single by id
+const getSingleByid = async (id: string) => {
+  const result = await prisma.book.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      category: true,
+    },
+  });
+
+  return result;
+};
+
+// Delete single by id
+const deleteSIngleByID = async (id: string) => {
+  const result = await prisma.book.delete({
+    where: {
+      id: id,
+    },
+    include: {
+      category: true,
+    },
+  });
+  return result;
+};
+
+export const BookService = {
+  postNewBook,
+  updateBook,
+  findByCatId,
+  getSingleByid,
+  deleteSIngleByID,
+};
