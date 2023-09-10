@@ -25,4 +25,32 @@ const getsingleById = async (params: string) => {
   });
   return result;
 };
-export const OrderService = { postOrder, getALlOrders, getsingleById };
+
+// Get a specific order for admin
+
+const getSpecificOrderAdmin = async (id: string) => {
+  const result = await prisma.order.findFirst({
+    where: {
+      id: id,
+    },
+  });
+  return result;
+};
+
+// Get specific for custome
+const getSpecificOrdercustomer = async (id: string, userId: string) => {
+  const result = await prisma.order.findFirst({
+    where: {
+      id: id,
+      userId: userId,
+    },
+  });
+  return result;
+};
+export const OrderService = {
+  postOrder,
+  getALlOrders,
+  getsingleById,
+  getSpecificOrderAdmin,
+  getSpecificOrdercustomer,
+};

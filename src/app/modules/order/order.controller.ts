@@ -47,4 +47,28 @@ const getallorder: RequestHandler = async (req, res, next) => {
   }
 };
 
+// For gettingsingle order
+const getSingleOrder: RequestHandler = async (req, res, next) => {
+  try {
+    const id = req?.params.id;
+    if (req?.user?.role == "admin") {
+      const result = await OrderService.getSpecificOrderAdmin(id);
+      ResponseSender.responseSender(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Order fetched successfully",
+        data: result,
+      });
+    }
+    if (req?.user?.role == "customer") {
+      const result = await OrderService.getSpecificOrdercustomer(
+        id,
+        req.user?.id
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const OrderController = { createOrder, getallorder };
