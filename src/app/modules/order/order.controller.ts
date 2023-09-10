@@ -65,6 +65,12 @@ const getSingleOrder: RequestHandler = async (req, res, next) => {
         id,
         req.user?.id
       );
+      ResponseSender.responseSender(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Order data fetched successfully",
+        data: result,
+      });
     }
   } catch (error) {
     next(error);
