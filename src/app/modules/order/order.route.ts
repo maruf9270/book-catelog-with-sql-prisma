@@ -10,5 +10,11 @@ routes.post(
   auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN),
   OrderController.createOrder
 );
+// For getting all the order
+routes.get(
+  "/",
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getallorder
+);
 
 export const OrderRoutes = { routes };

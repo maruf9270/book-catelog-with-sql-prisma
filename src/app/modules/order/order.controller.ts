@@ -20,4 +20,22 @@ const createOrder: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const OrderController = { createOrder };
+// For getting order
+const getallorder: RequestHandler = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (user?.role == "admin") {
+      const result = await OrderService.getALlOrders();
+      ResponseSender.responseSender(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Orders retived successfully",
+        data: result,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const OrderController = { createOrder, getallorder };
