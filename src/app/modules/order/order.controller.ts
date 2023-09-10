@@ -77,4 +77,4 @@ const getSingleOrder: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const OrderController = { createOrder, getallorder };
+export const OrderController = { createOrder, getallorder, getSingleOrder };
