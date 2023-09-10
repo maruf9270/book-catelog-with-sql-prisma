@@ -10,7 +10,7 @@ const user_enum_1 = require("../user/user.enum");
 const book_controller_1 = require("./book.controller");
 const routes = express_1.default.Router();
 // For creating new book
-routes.post("/", (0, auth_1.default)(user_enum_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.createNewBook);
+routes.post("/create-book", (0, auth_1.default)(user_enum_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.createNewBook);
 // For getting all the books with paginated data
 routes.get("/", book_controller_1.BookController.getAllWithPaginated);
 // For updating single book
