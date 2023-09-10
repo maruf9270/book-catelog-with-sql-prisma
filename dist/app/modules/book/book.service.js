@@ -8,9 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookService = void 0;
 const prisma_1 = require("../../shared/prisma");
+const paginationHelper_1 = require("../../../helper/paginationHelper");
+const book_constant_1 = require("./book.constant");
 // For creating a new Book
 const postNewBook = (params) => __awaiter(void 0, void 0, void 0, function* () {
     const isoDate = params.publicationDate + "T00:00:00.000Z";
@@ -77,10 +90,85 @@ const deleteSIngleByID = (id) => __awaiter(void 0, void 0, void 0, function* () 
     });
     return result;
 });
+// For getting all the books with paginated data
+const fetchWIthPaginated = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
+    const { size, page, skip } = paginationHelper_1.paginationHelpers.calculatePagination(paginationOptions);
+    const { search, category, minPrice, maxPrice } = filters, filtersData = __rest(filters, ["search", "category", "minPrice", "maxPrice"]);
+    const andConditions = [];
+    if (search) {
+        andConditions.push({
+            OR: book_constant_1.BookSearchAbleFields.map((field) => ({
+                [field]: {
+                    contains: search,
+                    mode: "insensitive",
+                },
+            })),
+        });
+    }
+    if (Object.keys(filtersData).length > 0) {
+        andConditions.push({
+            AND: Object.keys(filtersData).map((key) => ({
+                [key]: {
+                    equals: filtersData[key],
+                },
+            })),
+        });
+    }
+    // Convert minPrice and maxPrice to floats
+    const minPriceFloat = parseFloat(minPrice);
+    const maxPriceFloat = parseFloat(maxPrice);
+    if (!isNaN(minPriceFloat)) {
+        andConditions.push({
+            price: {
+                gte: minPriceFloat,
+            },
+        });
+    }
+    if (!isNaN(maxPriceFloat)) {
+        andConditions.push({
+            price: {
+                lte: maxPriceFloat,
+            },
+        });
+    }
+    if (category !== undefined) {
+        andConditions.push({
+            categoryId: {
+                equals: category,
+            },
+        });
+    }
+    const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
+    const result = yield prisma_1.prisma.book.findMany({
+        include: {
+            category: true,
+        },
+        where: whereConditions,
+        skip,
+        take: size,
+        orderBy: paginationOptions.sortBy && paginationOptions.sortOrder
+            ? { [paginationOptions.sortBy]: paginationOptions.sortOrder }
+            : { publicationDate: "desc" },
+    });
+    const total = yield prisma_1.prisma.book.count({
+        where: whereConditions,
+    });
+    const totalPage = Math.ceil(total / size);
+    return {
+        meta: {
+            total,
+            page,
+            size,
+            totalPage,
+        },
+        data: result,
+    };
+});
 exports.BookService = {
     postNewBook,
     updateBook,
     findByCatId,
     getSingleByid,
     deleteSIngleByID,
+    fetchWIthPaginated,
 };

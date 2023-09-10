@@ -10,6 +10,7 @@ const user_route_1 = require("../modules/user/user.route");
 const category_route_1 = require("../modules/category/category.route");
 const book_route_1 = require("../modules/book/book.route");
 const order_route_1 = require("../modules/order/order.route");
+const profile_route_1 = require("../modules/profile/profile.route");
 const router = express_1.default.Router();
 // Routes for auth
 router.use("/auth", auth_route_1.AuthRoutes.routes);
@@ -21,4 +22,6 @@ router.use("/categories", category_route_1.CategoryRoutes.routes);
 router.use("/books", book_route_1.BookRoutes.routes);
 // ROutes for order
 router.use("/orders", order_route_1.OrderRoutes.routes);
+// Routes for profile
+router.use("/profile", profile_route_1.ProfileRoutes.routes);
 exports.RootRoute = { router };

@@ -11,6 +11,8 @@ const book_controller_1 = require("./book.controller");
 const routes = express_1.default.Router();
 // For creating new book
 routes.post("/", (0, auth_1.default)(user_enum_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.createNewBook);
+// For getting all the books with paginated data
+routes.get("/", book_controller_1.BookController.getAllWithPaginated);
 // For updating single book
 routes.patch("/:id", (0, auth_1.default)(user_enum_1.ENUM_USER_ROLE.ADMIN), book_controller_1.BookController.updateBOok);
 // For finding book by cat id
