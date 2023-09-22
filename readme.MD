@@ -5,7 +5,7 @@
 ## User
 
 1. api/v1/auth/signup (POST)
-2. /api/v1/auth/login (POST)
+2. api/v1/auth/login (POST)
 3. api/v1/users (GET)
 4. api/v1/users/a35b58c3-24fe-4e83-833c-6e3431e8d9e9 (Single GET)
 5. api/v1/users/api/v1/users/a35b58c3-24fe-4e83-833c-6e3431e8d9e9 (PATCH)
