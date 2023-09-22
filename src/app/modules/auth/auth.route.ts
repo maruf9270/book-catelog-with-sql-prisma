@@ -5,6 +5,6 @@ const routes = express.Router();
 // For creating new user
 routes.post("/signup", AuthController.createUser);
 // For logging in
-routes.post("/login", AuthController.loginUser);
+routes.post("/signin", AuthController.loginUser);
 
 export const AuthRoutes = { routes };

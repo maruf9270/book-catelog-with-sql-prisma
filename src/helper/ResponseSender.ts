@@ -3,6 +3,7 @@ type IApiResponse<T> = {
   statusCode: number;
   success: boolean;
   message?: string | null;
+  token?: string;
   meta?: {
     page: number;
     size: number;

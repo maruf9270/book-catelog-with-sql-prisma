@@ -45,7 +45,8 @@ const findBookByCatId: RequestHandler = async (req, res, next) => {
       success: true,
       statusCode: httpStatus.OK,
       message: "Books with associated category data fetched successfully",
-      data: result,
+      meta: result.meta,
+      data: result.data,
     });
   } catch (error) {
     next(error);
@@ -84,11 +85,23 @@ const deleteSIngleBOok: RequestHandler = async (req, res, next) => {
 };
 
 // For gtting all the books with paginated data
+
 const getAllWithPaginated: RequestHandler = async (req, res, next) => {
   try {
-    const filters = pick(req.query, BookFilterAbleFileds);
+    const filters = pick(req.query, [
+      "search",
+      "category",
+      "minPrice",
+      "maxPrice",
+    ]);
 
-    const paginationOptions = pick(req.query, paginationFields);
+    const paginationOptions = pick(req.query, [
+      "page",
+      "size",
+      "sortBy",
+      "sortOrder",
+    ]);
+    console.log(filters, paginationOptions);
     const result = await BookService.fetchWIthPaginated(
       filters,
       paginationOptions

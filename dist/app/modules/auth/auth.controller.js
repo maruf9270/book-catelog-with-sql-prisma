@@ -39,13 +39,11 @@ const loginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             httpOnly: true,
         };
         res.cookie("user", accessToken, cookieOptions);
-        ResponseSender_1.ResponseSender.responseSender(res, {
+        res.status(200).json({
             statusCode: 200,
             success: true,
             message: "User loggedin successfully !",
-            data: {
-                token: refreshToken,
-            },
+            token: refreshToken,
         });
     }
     catch (error) {

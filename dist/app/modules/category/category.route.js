@@ -10,7 +10,7 @@ const user_enum_1 = require("../user/user.enum");
 const category_controller_1 = require("./category.controller");
 const routes = express_1.default.Router();
 // For creating
-routes.post("/", (0, auth_1.default)(user_enum_1.ENUM_USER_ROLE.ADMIN), category_controller_1.CategoryController.createCategory);
+routes.post("/create-category", (0, auth_1.default)(user_enum_1.ENUM_USER_ROLE.ADMIN), category_controller_1.CategoryController.createCategory);
 // For gettng all the catch
 routes.get("/", category_controller_1.CategoryController.getAllCAt);
 // For updating

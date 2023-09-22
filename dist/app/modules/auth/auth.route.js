@@ -10,5 +10,5 @@ const routes = express_1.default.Router();
 // For creating new user
 routes.post("/signup", auth_controller_1.AuthController.createUser);
 // For logging in
-routes.post("/login", auth_controller_1.AuthController.loginUser);
+routes.post("/signin", auth_controller_1.AuthController.loginUser);
 exports.AuthRoutes = { routes };

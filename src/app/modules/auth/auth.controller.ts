@@ -27,13 +27,11 @@ const loginUser: RequestHandler = async (req, res, next) => {
       httpOnly: true,
     };
     res.cookie("user", accessToken, cookieOptions);
-    ResponseSender.responseSender(res, {
+    res.status(200).json({
       statusCode: 200,
       success: true,
       message: "User loggedin successfully !",
-      data: {
-        token: refreshToken,
-      },
+      token: refreshToken,
     });
   } catch (error) {
     next(error);

@@ -4,7 +4,11 @@ import { ENUM_USER_ROLE } from "../user/user.enum";
 import { CategoryController } from "./category.controller";
 const routes = express.Router();
 // For creating
-routes.post("/", auth(ENUM_USER_ROLE.ADMIN), CategoryController.createCategory);
+routes.post(
+  "/create-category",
+  auth(ENUM_USER_ROLE.ADMIN),
+  CategoryController.createCategory
+);
 // For gettng all the catch
 routes.get("/", CategoryController.getAllCAt);
 // For updating

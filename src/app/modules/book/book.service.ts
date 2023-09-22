@@ -40,6 +40,8 @@ const updateBook = async (params: Partial<Book>, id: string) => {
 
 // For finding a single book by category id
 const findByCatId = async (id: string) => {
+  const page = 1;
+  const size = 20;
   const result = await prisma.book.findMany({
     where: {
       categoryId: id,
@@ -48,7 +50,21 @@ const findByCatId = async (id: string) => {
       category: true,
     },
   });
-  return result;
+  const total = await prisma.book.count({
+    where: {
+      categoryId: id,
+    },
+  });
+  const totalPage = Math.ceil(total / size);
+  return {
+    meta: {
+      total,
+      page,
+      size,
+      totalPage,
+    },
+    data: result,
+  };
 };
 // Get single by id
 const getSingleByid = async (id: string) => {

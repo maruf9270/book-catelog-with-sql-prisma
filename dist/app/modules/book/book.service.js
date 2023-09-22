@@ -56,6 +56,8 @@ const updateBook = (params, id) => __awaiter(void 0, void 0, void 0, function* (
 });
 // For finding a single book by category id
 const findByCatId = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const page = 1;
+    const size = 20;
     const result = yield prisma_1.prisma.book.findMany({
         where: {
             categoryId: id,
@@ -64,7 +66,21 @@ const findByCatId = (id) => __awaiter(void 0, void 0, void 0, function* () {
             category: true,
         },
     });
-    return result;
+    const total = yield prisma_1.prisma.book.count({
+        where: {
+            categoryId: id,
+        },
+    });
+    const totalPage = Math.ceil(total / size);
+    return {
+        meta: {
+            total,
+            page,
+            size,
+            totalPage,
+        },
+        data: result,
+    };
 });
 // Get single by id
 const getSingleByid = (id) => __awaiter(void 0, void 0, void 0, function* () {

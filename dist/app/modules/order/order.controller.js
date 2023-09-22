@@ -37,6 +37,15 @@ const createOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 const getallorder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.user;
+        if ((user === null || user === void 0 ? void 0 : user.role) === "customer") {
+            const result = yield order_service_1.OrderService.getsingleById(user.id);
+            ResponseSender_1.ResponseSender.responseSender(res, {
+                success: true,
+                statusCode: http_status_1.default.OK,
+                message: "Order retived successfully",
+                data: result,
+            });
+        }
         if ((user === null || user === void 0 ? void 0 : user.role) == "admin") {
             const result = yield order_service_1.OrderService.getALlOrders();
             ResponseSender_1.ResponseSender.responseSender(res, {
@@ -45,15 +54,6 @@ const getallorder = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 message: "Orders retived successfully",
                 data: result,
             });
-            if ((user === null || user === void 0 ? void 0 : user.role) == "customer") {
-                const result = yield order_service_1.OrderService.getsingleById(user.id);
-                ResponseSender_1.ResponseSender.responseSender(res, {
-                    success: true,
-                    statusCode: http_status_1.default.OK,
-                    message: "Order retived successfully",
-                    data: result,
-                });
-            }
         }
     }
     catch (error) {
