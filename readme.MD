@@ -27,7 +27,7 @@
 3. api/v1/books/469ac343-3dbd-431b-994f-15851fc378c5/category (GET)
 4. api/v1/books/5c022620-897b-4a81-ac7a-f5fa8a47dd7c (GET SINGLE BOOK)
 5. api/v1/books/5c022620-897b-4a81-ac7a-f5fa8a47dd7c (PATCH)
-6. api/v1/books/5c022620-897b-4a81-ac7a-f5fa8a47dd7c (DELETE)
+6. api/v1/books/dff3afc9-df9e-49d6-a6fa-25f36a2fab36 (DELETE)
 
 ## Orders
 
